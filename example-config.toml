@@ -1,0 +1,46 @@
+# ListenAddr is the address the web server listens on for serving the mirrors.
+# Defaults to :8080
+ListenAddr   = ":8080"
+# Interval is the default interval for updating mirrors, can be overridden per
+# repo.  Defaults to 15 minutes.
+Interval     = "15m"
+# Top level users have access to all private repos.
+Users        = [
+    "bob the admin:crazy-password",
+]
+# Base path for storing mirrors, absolute or relative.  Defaults to "."
+BasePath = "/tmp/mirror"
+
+# An example of a public mirror taking defaults from above.  The Name is
+# generated from the URL by just taking the host and path.
+#
+# Will be mirrored at at http://localhost:8080/github.com/beefsack/git-mirror.git
+[[Repo]]
+Origin = "https://github.com/beefsack/git-mirror.git"
+
+# An example of a private repo with users having access.  "bob the admin" also
+# has access to this repo.
+#
+# Will be mirrored at http://localhost:8080/github.com/neovim/neovim.git
+[[Repo]]
+Origin   = "https://github.com/neovim/neovim.git"
+Private  = true
+Interval = "10m"
+Users    = [
+    "mary:some-other-password"
+]
+
+# Repos whose Origin is not a URL is simplified to the last part after any @
+# symbol with any : symbol converted to a /
+#
+# Will be mirrored at http://localhost:8080/github.com/toml-lang-toml.git
+[[Repo]]
+Origin = "git@github.com:toml-lang/toml.git"
+
+# It is also possible to set custom names for accessing the repos.  This is
+# required for remotes not using URL schemes.
+#
+# Will be mirrored at http://localhost:8080/custom-name
+[[Repo]]
+Origin = "git@github.com:toml-lang/toml.git"
+Name   = "custom-name"
