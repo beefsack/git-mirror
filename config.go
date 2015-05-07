@@ -1,6 +1,7 @@
 package main
 
 import (
+	"path/filepath"
 	"fmt"
 	"io/ioutil"
 	"net/url"
@@ -53,6 +54,9 @@ func parseConfig(filename string) (cfg config, repos map[string]repo, err error)
 	}
 	if cfg.BasePath == "" {
 		cfg.BasePath = "."
+	}
+	if cfg.BasePath, err = filepath.Abs(cfg.BasePath); err != nil {
+		err = fmt.Errorf("unable to get absolute path to base path, %s", err)
 	}
 
 	// Fetch repos, injecting default values where needed.
