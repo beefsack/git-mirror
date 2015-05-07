@@ -37,7 +37,7 @@ func main() {
 	}
 
 	// Run HTTP server to serve mirrors.
-	http.HandleFunc("/", handler(cfg, repos))
+	http.Handle("/", http.FileServer(http.Dir(cfg.BasePath)))
 	log.Printf("starting web server on %s", cfg.ListenAddr)
 	if err := http.ListenAndServe(cfg.ListenAddr, nil); err != nil {
 		log.Fatalf("failed to start server, %s", err)

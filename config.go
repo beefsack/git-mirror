@@ -17,7 +17,6 @@ type duration struct {
 type config struct {
 	ListenAddr string
 	Interval   duration
-	Users      []string
 	BasePath   string
 	Repo       []repo
 }
@@ -26,8 +25,6 @@ type repo struct {
 	Name     string
 	Origin   string
 	Interval duration
-	Private  bool
-	Users    []string
 }
 
 func (d *duration) UnmarshalText(text []byte) (err error) {
@@ -53,9 +50,6 @@ func parseConfig(filename string) (cfg config, repos map[string]repo, err error)
 	}
 	if cfg.Interval.Duration == 0 {
 		cfg.Interval.Duration = 15 * time.Minute
-	}
-	if cfg.Users == nil {
-		cfg.Users = []string{}
 	}
 	if cfg.BasePath == "" {
 		cfg.BasePath = "."
@@ -94,12 +88,6 @@ func parseConfig(filename string) (cfg config, repos map[string]repo, err error)
 
 		if r.Interval.Duration == 0 {
 			r.Interval.Duration = cfg.Interval.Duration
-		}
-		if r.Private {
-			if r.Users == nil {
-				r.Users = []string{}
-			}
-			r.Users = append(r.Users, cfg.Users...)
 		}
 		repos[r.Name] = r
 	}

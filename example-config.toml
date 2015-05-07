@@ -4,10 +4,6 @@ ListenAddr   = ":8080"
 # Interval is the default interval for updating mirrors, can be overridden per
 # repo.  Defaults to 15 minutes.
 Interval     = "15m"
-# Top level users have access to all private repos.
-Users        = [
-    "bob the admin:crazy-password",
-]
 # Base path for storing mirrors, absolute or relative.  Defaults to "."
 BasePath = "/tmp/mirror"
 
@@ -18,18 +14,6 @@ BasePath = "/tmp/mirror"
 [[Repo]]
 Origin = "https://github.com/beefsack/git-mirror.git"
 
-# An example of a private repo with users having access.  "bob the admin" also
-# has access to this repo.
-#
-# Will be mirrored at http://localhost:8080/github.com/neovim/neovim.git
-[[Repo]]
-Origin   = "https://github.com/neovim/neovim.git"
-Private  = true
-Interval = "10m"
-Users    = [
-    "mary:some-other-password"
-]
-
 # Repos whose Origin is not a URL is simplified to the last part after any @
 # symbol with any : symbol converted to a /
 #
@@ -37,8 +21,14 @@ Users    = [
 [[Repo]]
 Origin = "git@github.com:toml-lang/toml.git"
 
-# It is also possible to set custom names for accessing the repos.  This is
-# required for remotes not using URL schemes.
+# Repos can specify their own Interval to override the global setting.
+#
+# Will be mirrored at http://localhost:8080/github.com/neovim/neovim.git
+[[Repo]]
+Origin   = "https://github.com/neovim/neovim.git"
+Interval = "10m"
+
+# It is also possible to set custom names for accessing the repos.
 #
 # Will be mirrored at http://localhost:8080/custom-name
 [[Repo]]
