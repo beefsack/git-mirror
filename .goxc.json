@@ -1,0 +1,5 @@
+{
+	"ArtifactsDest": ".",
+	"ResourcesInclude": "README.md,LICENSE,example-config.toml",
+	"ConfigVersion": "0.9"
+}
